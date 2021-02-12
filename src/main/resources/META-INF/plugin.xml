@@ -1,0 +1,23 @@
+<idea-plugin>
+    <id>info.dogechain.doge_control_center</id>
+    <name>Doge Control Center</name>
+    <vendor email="templariusz83@gmail.com">Doge Control Center</vendor>
+    <version>0.1.0</version>
+
+    <description>That plugin displays current price of DogeCoin in USD and BTC from Binance API</description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="info.dogechain.doge_control_center.DogeControlCenterStartup"/>
+        <applicationService serviceImplementation="info.dogechain.doge_control_center.DogeCoinPriceManager" />
+        <statusBarWidgetFactory id="dogeControlCenterPriceIndicator" implementation="info.dogechain.doge_control_center.PriceIndicatorWidgetFactory"
+                                order="before memoryUsageWidget"/>
+    </extensions>
+
+    <actions>
+
+    </actions>
+</idea-plugin>
