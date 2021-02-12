@@ -20,7 +20,11 @@ class PriceIndicatorWidgetFactory : StatusBarWidgetFactory {
     }
 
     override fun createWidget(project: Project): StatusBarWidget {
-        return DogeCoinPriceIndicator()
+        val indicator = DogeCoinPriceIndicator();
+
+        indicator.startMonitoring()
+
+        return indicator;
     }
 
     override fun disposeWidget(widget: StatusBarWidget) {

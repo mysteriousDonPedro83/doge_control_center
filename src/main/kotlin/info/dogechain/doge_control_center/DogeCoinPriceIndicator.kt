@@ -31,18 +31,25 @@ class DogeCoinPriceIndicator() : JButton(), CustomStatusBarWidget {
     private var manager: DogeCoinPriceManager
     private var latest: Pair<Float, Float> = Pair(0f, 0f)
     private var previous: Pair<Float, Float> = Pair(0f, 0f)
-    private var future: ScheduledFuture<*>
+    private var future: ScheduledFuture<*>? = null
     private var poller: QueuePoller
 
     init {
-        preferredSize = Dimension(250, 25)
+        preferredSize = Dimension(300, 25)
         refreshColors()
         isOpaque = false
         isFocusable = false
 
         manager = service();
         poller = QueuePoller(this, manager.queue)
-        future = AppExecutorUtil.getAppScheduledExecutorService().scheduleWithFixedDelay(poller, 500, 100, TimeUnit.MILLISECONDS)
+    }
+
+    fun startMonitoring() {
+        if (null != future) {
+            return
+        }
+        future = AppExecutorUtil.getAppScheduledExecutorService()
+            .scheduleWithFixedDelay(poller, 200, 200, TimeUnit.MILLISECONDS)
     }
 
 
@@ -51,7 +58,9 @@ class DogeCoinPriceIndicator() : JButton(), CustomStatusBarWidget {
     }
 
     override fun dispose() {
-        future.cancel(true)
+        val schedule = future ?: return;
+        schedule.cancel(true)
+        future = null;
     }
 
     override fun ID(): String {
@@ -115,7 +124,7 @@ class DogeCoinPriceIndicator() : JButton(), CustomStatusBarWidget {
             g2.dispose()
             myBufferedImage = bufferedImage
         }
-        if(null != bufferedImage){
+        if (null != bufferedImage) {
             draw(g, bufferedImage)
         }
         previous = currentState
