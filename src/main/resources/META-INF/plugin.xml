@@ -2,7 +2,8 @@
     <id>info.dogechain.doge_control_center</id>
     <name>Doge Control Center</name>
     <vendor email="templariusz83@gmail.com">Doge Control Center</vendor>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
+    <idea-version since-build="203.7148.15"/>
 
     <description>That plugin displays current price of DogeCoin in USD and BTC from Binance API</description>
 
